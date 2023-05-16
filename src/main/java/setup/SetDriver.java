@@ -1,10 +1,13 @@
-package SetUp;
+package setup;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 
 /*
@@ -12,6 +15,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * */
 public class SetDriver {
     public static WebDriver driver;
+    public static WebDriverWait webDriverWait;
 
     public static void chosenDriverIs(String browsersName) {
         if (browsersName.equalsIgnoreCase("chrome")) {
@@ -22,6 +26,9 @@ public class SetDriver {
             System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
             driver = new FirefoxDriver();
         }
+
+        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
     public static void addCookie(Cookie cookie) {
@@ -34,6 +41,7 @@ public class SetDriver {
 
     public static void shutDown() {
         driver.quit();
+        driver = null;
     }
 
     public static void refreshPage() {

@@ -1,14 +1,15 @@
-import PageObject.MainPage;
-import PageObject.OrderPage;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.Cookie;
+import pompages.MainPage;
+import pompages.OrderPage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static SetUp.SetDriver.*;
+import static setup.SetDriver.*;
+import static sources.URLs.URL_MAP;
 
 @RunWith(Parameterized.class)
 public class TestOrder {
@@ -40,7 +41,7 @@ public class TestOrder {
     private OrderPage orderPage = new OrderPage(driver);
 
     @Parameterized.Parameters
-    public static Object[][] getSumData() {
+    public static Object[][] twoArraysOfTestData() {
         return new Object[][]{
                 {"нижняя", "Имя", "Фамилия", "Какой-то адрес", "Черкизовская", "88005553535", "20.05.2023", "сутки", "черный", "Комментарий для курьера"},
                 {"верхняя", "Иванов", "Иван", "Москва, Автозаводская ул., 18", "Но", "89166609090", "23.05.2023", "трое суток", "серый", ""}
@@ -58,15 +59,15 @@ public class TestOrder {
     }
 
     @Before
-    public void start(){
-        openPage("https://qa-scooter.praktikum-services.ru/");
+    public void start() {
+        openPage(URL_MAP.get("mainPage"));
         addCookie(allCookies.get(0));
         addCookie(allCookies.get(1));
         refreshPage();
     }
 
     @Test
-    public void orderByUpperOrderButton() {
+    public void makeOrderUsingBothButtonsWithDifferentDate() {
         mainPage.clickOnLowerOrUpper(button)
                 .fillInInputName(name)
                 .fillInInputSurname(surname)

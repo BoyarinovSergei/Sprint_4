@@ -1,15 +1,16 @@
-package PageObject;
+package pompages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
-import static Helper.InteractWithElements.clickOn;
-import static Helper.InteractWithElements.waitALittleBit;
+import static helper.Helper.cleverWaiter;
+import static helper.Helper.clickOn;
 
 /*
  * Описание страницы заказа самоката https://qa-scooter.praktikum-services.ru/order
  * */
+
 public class OrderPage {
     private WebDriver driver;
 
@@ -28,6 +29,9 @@ public class OrderPage {
 
     //На экране 'Для кого самокат' поле 'Станция метро'
     private By inputUndergroundStation = By.xpath("//input[@placeholder=\"* Станция метро\"]");
+
+    //На экране 'Для кого самокат' выпадающий список в поле 'Станция метро'
+    private By dropDownUnderground = By.xpath("//div[@class=\"select-search__select\"]");
 
     //На экране 'Для кого самокат' поле 'Телефон: на него позвонит курьер'
     private By inputPhone = By.xpath("//input[@placeholder=\"* Телефон: на него позвонит курьер\"]");
@@ -76,7 +80,7 @@ public class OrderPage {
 
     public OrderPage fillInInputUndergroundStation(String value) {
         driver.findElement(inputUndergroundStation).sendKeys(value);
-        waitALittleBit(500);
+        cleverWaiter(dropDownUnderground);
         driver.findElement(inputUndergroundStation).sendKeys(Keys.DOWN);
         driver.findElement(inputUndergroundStation).sendKeys(Keys.ENTER);
         clickOn(inputName);
